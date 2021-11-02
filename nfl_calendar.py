@@ -5,8 +5,18 @@ import datetime
 
 
 class Calendar:
+    """
+    Class used to get games happening every week.
+    """
 
     def __init__(self, current_week):
+        """
+        Creates two dictionnaries, self.weeks and self.games.
+        self.weeks : Stores each html week file
+        self.games : Stores date and teams for each games in a 2D dict. structure : self.games[week_number][game_name]
+
+        :param current_week: int
+        """
         self.current_week = current_week
         self.weeks = {}
         self.games = {}
@@ -18,14 +28,14 @@ class Calendar:
             self.weeks[week_nb] = week_html.read_html()
             self.games[week_nb] = {}
 
+        # Add games to self.games dict (so add the date and the teams.
         # since we don't have the info for the current week we need to do until last week.
         for week_index in range(current_week - 1):
             self.update_week_games(week_index+1)
 
-    def _update_week_file(self, week_nb):
+    def update_week_file(self, week_nb):
         """
         Retrieves the games happening on week week_nb and creates/updates the html file.
-        Named as private because bypass is active.
         :param week_nb: integer (between 1 and 18)
         :return:
         """
@@ -45,7 +55,7 @@ class Calendar:
         """
         if bypass:
             for i in range(18):
-                self._update_week_file(i + 1)
+                self.update_week_file(i + 1)
 
     def update_week_games(self, week_nb):  # ######## ici
         """

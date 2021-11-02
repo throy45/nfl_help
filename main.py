@@ -5,9 +5,6 @@ from nfl_calendar import Calendar
 
 
 def main():
-    #url = "https://www.allsides.com/media-bias/media-bias-ratings"
-    url = "https://www.pro-football-reference.com/years/2021/week_7.htm"
-    html_file = HTML(url)  # ##########  need to give name
 
     # We ask the user if he wants to update the html file because too much of it will DDOS the site.
     html_file.update_html()
@@ -24,6 +21,6 @@ def main():
 
 
 # main()
-calendar = Calendar(6)
+calendar = Calendar(7)
 
 
