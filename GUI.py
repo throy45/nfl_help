@@ -1,5 +1,5 @@
 from tkinter import *
-
+import webbrowser
 
 class Display:
 
@@ -22,7 +22,7 @@ class Display:
         # Drop down box to select week
         self.week_selection = StringVar()
         self.week_selection.set("Select the week")
-        self.weeks = ["Week " + str(i) for i in range(18)]
+        self.weeks = ["Week " + str(1+i) for i in range(18)]
         self.week_dropdown = OptionMenu(self.root, self.week_selection,
                                         *self.weeks)
 
@@ -44,6 +44,11 @@ class Display:
         self.all_submit = Button(self.root, text="Save all", command=self.click_all)
         self.get_games_button = Button(self.root, command=self.get_games,
                                        text="See games of corresponding week")
+
+    def get_game_link(self, week_nb, game, game_date, home_team):
+        self.calendar.games[week_nb][game][2]
+        self.link[game] = Label(self.root, text="Game 1", fg="blue", cursor="hand2")
+        self.link[game].bind("<Button-1>", lambda e: webbrowser.open_new("https://www.pro-football-reference.com/boxscores/202109090tam.htm"))
 
     def click(self, index):
         """
@@ -80,6 +85,7 @@ class Display:
         self.week_dropdown.grid(row=6, column=1)
         self.instructions.grid(row=6, column=0)
         self.get_games_button.grid(row=6, column=2)
+        ###########  self.link1.grid(row=7, column=0)
 
     def get_week_selection(self):
         """
@@ -102,10 +108,11 @@ class Display:
         """
         week = self.get_week_selection()
         print(week)
-        weeknb = int(week[5:])
-        self.calendar.update_week_games(weeknb)
-        for game in self.calendar.games[weeknb].keys():
-            print(game + " : " + self.calendar.games[weeknb][game][1])
+        week_nb = int(week[5:])
+        self.calendar.update_week_games(week_nb)
+        for game in self.calendar.games[week_nb].keys():
+            print(game + " : " + self.calendar.games[week_nb][game][1])
+            print(self.calendar.games[week_nb][game][2])
 
     def run(self):
         """
