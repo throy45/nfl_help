@@ -14,7 +14,8 @@ class Calendar:
         Creates two dictionnaries, self.weeks and self.games.
         self.weeks : Stores each html week file
         self.games : Stores date and teams for each games in a 2D dict.
-                     structure : self.games[week_number][game_name]
+                     structure : self.games[week_number][game_name] = (datetime.date, Team1Team2 str,
+                                                                       gamehyperlink str)
 
         :param current_week: int
         """
@@ -62,7 +63,7 @@ class Calendar:
             for i in range(18):
                 self.update_week_file(i + 1)
 
-    def update_week_games(self, week_nb):  # ######## ici
+    def update_week_games(self, week_nb):
         """
         Adds or updates the games for specified week in the games dict.
         Currently can only fetch past games.
@@ -84,7 +85,7 @@ class Calendar:
 
         # for every game (16) per week, create an element for that game in
         # self.games
-        for game_index in range(16):
+        for game_index in range(16):  ########## could become its own method
             game_name = f"Game {str(game_index + 1)}"
 
             # select the date of the particular game
@@ -97,16 +98,25 @@ class Calendar:
             loser = rows[game_index].select_one('.loser td').text.strip()
             winner = rows[game_index].select_one('.winner td').text.strip()
 
+            # select the game link using some string formatting
+            # unfortunately my limited knowledge of html and css falls short here so
+            # I resorted to this method.
+            link = rows[game_index].select_one('.gamelink').find_all('a', href=True)
+            link = str(link)[10:37]
+            link = "https://www.pro-football-reference.com/" + link
+
             # we flip a coin to be unable to tell who won and who lost.
             # (because we don't want to spoil the user)
+            # and then we store the date, teams and the link.
             if random.random() > .5:
-                self.games[week_nb][game_name] = (date, f"{loser} & {winner}")
+                self.games[week_nb][game_name] = (date, f"{loser} & {winner}", link)
             else:
-                self.games[week_nb][game_name] = (date, f"{winner} & {loser}")
+                self.games[week_nb][game_name] = (date, f"{winner} & {loser}", link)
 
-    def generate_link(self, week_nb):
-        """
-        Generate the url for the specified week_nb
-        :param week_nb:
-        :return:
-        """
+
+"""
+teams = ["crd", "atl", "rav", "buf", "car", "chi", "cin", "cle",
+                      "dal", "den", "det", "gnb", "htx", "clt", "jax", "kan",
+                      "rai", "sdg", "ram", "mia", "min", "nwe", "nor", "nyg",
+                      "nyj", "phi", "pit", "sfo", "sea", "tam", "oti", "was"]
+"""
