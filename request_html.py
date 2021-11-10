@@ -7,13 +7,11 @@ class HTML:
     (fetching html, saving to file, reading file, updating the instance's file)
     """
 
-    def __init__(self, url, file_name):
+    def __init__(self, file_name):
         """
         Initializes the html instance
-        :param url: string with full url
         :param file_name: str name to give html file. .html will be added
         """
-        self.url = url
         self.name = file_name + ".html"
 
     def save_html(self, html):
@@ -37,10 +35,11 @@ class HTML:
             print("File not found. Returning none.")
             return None
 
-    def update_html(self, *, bypass=False):
+    def update_html(self, week_nb, *, bypass=False):
         """
         Prompts the user if he (really) wants to update the html file stored.
         If so, will update according to self.url and save with save_html
+        :param week_nb: week number used to define url
         :param bypass: bypass the warning about ddos
         :return: none
         """
@@ -58,6 +57,8 @@ class HTML:
                     break
 
         if update_html == "True":
-            r = requests.get(self.url)
+            url = "https://www.pro-football-reference.com/years/2021/week_" + \
+                   str(week_nb) + ".htm"
+            r = requests.get(url)
             self.save_html(r.content)
             print("Html file updated successfully.")
