@@ -7,7 +7,7 @@ from GUI import Display
 
 
 def main():
-    calendar = Calendar(9)
+    calendar = Calendar(11)
 
     dis = Display(calendar)
     dis.run()

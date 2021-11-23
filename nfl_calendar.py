@@ -136,9 +136,10 @@ class Calendar:
                 print("Index error. Week " +  str(week_nb) +
                       " doesn't seem to have 16 games. Continuing.")
                 continue
-            except ValueError:
-                print("Value error. Continuing.")
-                continue
+            # except ValueError:
+            #     print("Value error. Week " + str(week_nb) + " seems to be " +
+            #           "empty. Continuing.")
+            #     continue
 
 
 """

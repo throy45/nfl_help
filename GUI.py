@@ -2,6 +2,10 @@ from tkinter import *
 import webbrowser
 
 
+def callback(event):
+    webbrowser.open_new(event)
+
+
 class Display:
 
     def __init__(self, cal):
@@ -14,14 +18,14 @@ class Display:
         # Creating the root widget, the window.
         self.root = Tk()  # Has to be first, this is the window.
         self.root.title("NFL Stats created by throy45")
-        self.root.geometry("700x600")
+        self.root.geometry("650x150")
 
         # Creating a welcome text.
-        self.welcome = Label(self.root, text="Welcome to NFL Stats.")
-        self.warning = Label(self.root, text="Warning : do not update data " \
-                                             "frequently.")
-        self.warning2 = Label(self.root, text="This could cause an attack on " \
-                                              "the website.")
+        self.welcome = Label(self.root, text="Welcome to NFL Stats!")
+        self.warning = Label(self.root, fg="red",
+                             text="Warning : do not update data frequently.")
+        self.warning2 = Label(self.root,
+                              text="This could cause an attack on the website.")
         self.instructions = Label(self.root, text="Please select a week.")
 
         # Drop down box to select week
@@ -46,27 +50,27 @@ class Display:
 
         # Creating buttons. Usually don't put parenthesis in command's function
         # but here click is returning a function
-        self.all_submit = Button(self.root, text="Save all",
+        self.all_submit = Button(self.root, text="Save all", cursor="hand2",
                                  command=self.click_all)
         self.get_games_button = Button(self.root, command=self.get_games,
-                                       text="See games of corresponding week")
-        self.update_data = Button(self.root, text="Update data",
-                                  command=self.calendar.update_all_html)
+                                       cursor="hand2", text="See games of "
+                                                            "corresponding week")
+        self.update_data = Button(self.root, text="Update data", cursor="hand2",
+                                  command=self.calendar.update_all_html,
+                                  fg="red")
 
-    def get_game_link(self, week_nb, game, game_date, home_team):
+    def get_game_link(self, week_nb, game):
         """
 
         :param week_nb:
         :param game:
-        :param game_date:
-        :param home_team:
         :return:
         """
         self.calendar.games[week_nb][game][2]
         self.link[game] = Label(self.root, text="Game 1", fg="blue",
                                 cursor="hand2")
         self.link[game].bind("<Button-1>", lambda e: webbrowser.open_new(
-            "https://www.pro-football-reference.com/boxscores/202109090tam.htm"))
+                "https://www.pro-football-reference.com/boxscores/202109090tam.htm"))
 
     def save_entry(self, index):
         """
@@ -101,12 +105,10 @@ class Display:
         self.ot_input.grid(row=3, column=1)
         self.mfg_prompt.grid(row=4, column=0)
         self.mfg_input.grid(row=4, column=1)
-        self.all_submit.grid(row=5, column=1)
-        self.week_dropdown.grid(row=6, column=1)
-        self.instructions.grid(row=6, column=0)
-        self.get_games_button.grid(row=6, column=2)
-
-        ###########  self.link1.grid(row=7, column=0)
+        #self.all_submit.grid(row=4, column=2) # doesnt work atm
+        self.week_dropdown.grid(row=5, column=1)
+        self.instructions.grid(row=5, column=0)
+        self.get_games_button.grid(row=5, column=2)
 
     def get_week_selection(self):
         """
@@ -127,13 +129,27 @@ class Display:
         Gets the games following selection in drop-down menu.
         :return:
         """
+        window = Toplevel(self.root)
         week = self.get_week_selection()
-        print(week)
+        week_selection = Label(window, text=week)
+        week_selection.pack()
+
         week_nb = int(week[5:])
-        self.calendar.update_week_games(week_nb)
-        for game in self.calendar.games[week_nb].keys():
-            print(game + " : " + self.calendar.games[week_nb][game][1])
-            print(self.calendar.games[week_nb][game][2])
+        try:
+            self.calendar.update_week_games(week_nb)
+            for game in self.calendar.games[week_nb].keys():
+                text = Label(window, text=game + " : "
+                                          + self.calendar.games[week_nb][game][1])
+                text.pack()
+
+                link = Label(window, text="stats link", fg="blue", cursor="hand2")
+                link.pack()
+                link.bind("<Button-1>", lambda e: callback(self.calendar.games[
+                                                               week_nb][game][2]))
+        except ValueError:
+            no_games = Label(window, text="No games in selected week, " +
+                                          "try updating.")
+            no_games.pack()
 
     def run(self):
         """
