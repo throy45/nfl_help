@@ -1,10 +1,10 @@
-# NFL Data Ranking App
+# nfl_help : Helps you decide which game is worth watching
 
 ## Overview
 
-(Work in progress, idea from 2021.)
+(Work in progress, idea from 2021)
 
-The NFL Data Ranking App is a Python application that allows you to pull NFL game data and rank the games based on the number of turnovers (interceptions and fumbles). This app uses the nfl_data_py library to fetch NFL play-by-play data and then calculates the turnover count for each game. The ranked games are presented in descending order of turnovers.
+nfl_help is a Python/Django application that allows you to pull NFL game data and rank the games based on the number of turnovers (interceptions and fumbles). This app uses the nfl_data_py library to fetch NFL play-by-play data and then calculates the turnover count for each game. The ranked games are presented in descending order of turnovers.
 
 ## Features
 
