@@ -1,0 +1,32 @@
+<!-- nfl_ranking/templates/nfl_ranking/game_ranking.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>NFL Game Ranking</title>
+  </head>
+  <body>
+    <h1>NFL Game Ranking by Turnovers</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Game ID</th>
+          <th>Week</th>
+          <th>Home Team</th>
+          <th>Away Team</th>
+          <th>Number of Turnovers</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for game in games_with_turnovers %}
+        <tr>
+          <td>{{ game.game_id }}</td>
+          <td>{{ game.week }}</td>
+          <td>{{ game.home_team }}</td>
+          <td>{{ game.away_team }}</td>
+          <td>{{ game.num_turnovers }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </body>
+</html>

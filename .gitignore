@@ -1,0 +1,39 @@
+# Python-related
+*.pyc
+__pycache__/
+*.pyo
+*.egg-info/
+dist/
+build/
+.env
+
+# Django-related
+*.log
+db.sqlite3
+media/
+static/
+local_settings.py
+*.swp
+
+# IDE and text editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# Compiled Python files
+*.pyc
+__pycache__/
+
+# User-uploaded files (if using a file upload system like Django's default)
+media/
+
+# Dependency directories (if using virtualenv)
+venv/
+
+# Project structure file
+project_structure.txt
