@@ -24,20 +24,20 @@ Before you can run the app, make sure you have the following prerequisites insta
 1. Clone this repository to your local machine:
 
 ```bash
-git clone https://github.com/throy45/nfl-data-ranking-app.git
+git clone https://github.com/throy45/nfl_help.git
 ```
 
 
 2. Change to the project directory:
 
 ```bash
-cd nfl-data-ranking-app
+cd nfl_help
 ```
 
 3. Install the required Python packages using pip:
 
 ```bash
-cd nfl-data-ranking-app
+pip install -r requirements.txt
 ```
 
 ## Usage
@@ -45,7 +45,7 @@ cd nfl-data-ranking-app
 1. Run the app by executing the following command in your terminal:
 
 ```bash
-python rank_nfl_games.py
+python nfl_help.py
 ```
 
 2. The app will fetch NFL play-by-play data, calculate turnovers, and rank the games by week.
