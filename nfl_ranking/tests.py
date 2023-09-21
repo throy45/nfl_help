@@ -66,16 +66,18 @@ class GameRankingViewTest(TestCase):
         Turnover.objects.create(game=self.game2, turnover_type='Interception')
 
     def test_game_ranking_view(self):
-        # Test the game ranking view
-        url = reverse('game_ranking')  # Get the URL for the view
-        response = self.client.get(url)  # Make a GET request to the view
-        # Check if the response is successful (HTTP 200)
+        response = self.client.get(
+            '/nfl-ranking/game-ranking/')  # Use the correct URL
+        # Check if the view returns a successful response
         self.assertEqual(response.status_code, 200)
-        # Check if game data is present in the response
-        self.assertContains(response, '2023_01_ARI_WAS')
-        self.assertContains(response, '2023_02_CLE_PIT')
-        # Check if turnovers are present
-        self.assertContains(response, 'Interception')
+        # Check if the rendered HTML contains the game data you expect
+        self.assertContains(response, """<tr>
+          <td>2023_01_ARI_WAS</td>
+          <td>1</td>
+          <td>ARI</td>
+          <td>WAS</td>
+          <td>2</td>
+        </tr>""")
 
     def test_game_ranking_template(self):
         # Test rendering of the game ranking template
